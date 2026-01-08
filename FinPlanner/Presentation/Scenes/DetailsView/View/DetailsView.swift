@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     @State var isNotificationSelected: Bool = false
+    @Binding var path: NavigationPath
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -88,11 +89,8 @@ struct DetailsView: View {
         }
         .padding(.horizontal, 20)
         .background(.appBlack)
+        .navigationBarHidden(true)
     }
-}
-
-#Preview {
-    DetailsView()
 }
 
 
@@ -100,7 +98,7 @@ extension DetailsView {
     var header: some View {
         HStack {
             Button {
-                
+                path.removeLast()
             } label: {
                 Image(systemName: "chevron.left")
                     .resizable()

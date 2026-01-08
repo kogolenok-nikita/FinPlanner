@@ -9,21 +9,30 @@ import SwiftUI
 
 struct ContentView: View {
     @State var isShowAddView: Bool = false
+    @State var payType: PayType = .mountly
+    @Binding var path: NavigationPath
     
     var body: some View {
         ZStack(alignment: .top) {
-            HeaderView(page: HeaderViewContent(totalPrice: "723 434 $", title: "Сумма долга", date: "15 декабря", pageType: .main), action: {
+            HeaderView(page: HeaderViewContent(totalPrice: "723 434", title: "Сумма долга", date: "15 декабря", pageType: .main), action: {
                 isShowAddView.toggle()
-            })
+            }, date: .constant(.now))
                 .zIndex(1)
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 19) {
-                    MainViewContentHeader()
+                    MainViewContentHeader(payType: $payType)
                     
                     VStack(alignment: .leading, spacing: 25) {
-                        PaymentCard()
-                        PaymentCard()
-                        PaymentCard()
+                        switch payType {
+                        case .mountly:
+                            PaymentCard(path: $path)
+                            PaymentCard(path: $path)
+                            PaymentCard(path: $path)
+                            PaymentCard(path: $path)
+                        case .oneTime:
+                            PaymentCard(path: $path)
+                            PaymentCard(path: $path)
+                        }
                     }
                 }
                 .padding(.top, 130)
