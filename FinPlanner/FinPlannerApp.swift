@@ -11,6 +11,7 @@ import SwiftUI
 struct FinPlannerApp: App {
     @State var path: NavigationPath = .init()
     
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $path) {
@@ -21,6 +22,9 @@ struct FinPlannerApp: App {
                             DetailsView(path: $path)
                         }
                     }
+            }
+            .onAppear {
+                print(FileManager.default.urls(for: .documentDirectory, in: .allDomainsMask).first)
             }
         }
     }

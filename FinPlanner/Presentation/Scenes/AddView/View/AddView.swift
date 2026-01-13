@@ -15,6 +15,8 @@ struct AddView: View {
     @State var isShowCalendar = false
     @State var isAdded: Bool = false
     
+    @State var viewModel: AddViewModel = Assembly.createAddViewModel()
+    
     var body: some View {
         VStack(alignment: .center, spacing: 27) {
             Text("Добавить платеж")
@@ -33,10 +35,6 @@ struct AddView: View {
         .frame(maxWidth: .infinity)
         .background(.appBlack)
     }
-}
-
-#Preview {
-    AddView()
 }
 
 // MARK: - addViewContent
@@ -124,7 +122,9 @@ extension AddView {
             .padding(.horizontal, 10)
             
             Spacer()
-            FullButton(text: "Добавить", fillСolor: .appYellow, textСolor: .appBlack)
+            FullButton(text: "Добавить", fillСolor: .appYellow, textСolor: .appBlack) {
+                viewModel.createNewPayment()
+            }
         }
     }
 }

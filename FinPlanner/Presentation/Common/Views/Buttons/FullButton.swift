@@ -11,10 +11,11 @@ struct FullButton: View {
     var text: String
     var fillСolor: Color
     var textСolor: Color
+    var action: (() -> Void)?
     
     var body: some View {
         Button {
-            //
+            action?()
         } label: {
             Text(text)
                 .cygre(.regular, 12)
