@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol FetchPaymentsRepository: AnyObject {
+    func fetchPayments(form date: Date?, completion: (Result<[Payment], Error>) ->Void) throws
+}

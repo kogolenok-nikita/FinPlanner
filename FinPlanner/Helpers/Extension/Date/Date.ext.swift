@@ -34,3 +34,15 @@ extension Date {
         Calendar.current.component(.day, from: self)
     }
 }
+
+extension Date {
+    var startOfMonth: Date {
+        let calendar = Calendar.current
+        return calendar.date(from: calendar.dateComponents([.year, .month], from: self))!
+    }
+    
+    var endOfMonth: Date {
+        let calendar = Calendar.current
+        return calendar.date(byAdding: .month, value: 1, to: startOfMonth)!
+    }
+}
