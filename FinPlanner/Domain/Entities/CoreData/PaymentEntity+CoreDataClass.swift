@@ -2,7 +2,7 @@
 //  PaymentEntity+CoreDataClass.swift
 //  FinPlanner
 //
-//  Created by Никита Коголенок on 8.01.26.
+//  Created by Никита Коголенок on 14.01.26.
 //
 //
 
@@ -24,16 +24,17 @@ extension PaymentEntity {
         return NSFetchRequest<PaymentEntity>(entityName: "PaymentEntity")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var type: Int16
-    @NSManaged public var title: String?
-    @NSManaged public var descriptionText: String?
-    @NSManaged public var paymentAmount: Double
-    @NSManaged public var totalAmount: Double
-    @NSManaged public var dueDay: Int16
-    @NSManaged public var dueDate: Date?
-    @NSManaged public var isNotificationEnable: Bool
     @NSManaged public var createdAt: Date?
+    @NSManaged public var descriptionText: String?
+    @NSManaged public var dueDate: Date?
+    @NSManaged public var dueDay: Int16
+    @NSManaged public var id: String?
+    @NSManaged public var isNotificationEnabled: Bool
+    @NSManaged public var paymentAmount: Double
+    @NSManaged public var title: String?
+    @NSManaged public var totalAmount: Double
+    @NSManaged public var type: Int16
+    @NSManaged public var lastPay: Date?
 
 }
 

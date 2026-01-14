@@ -18,4 +18,5 @@ struct Payment: Identifiable {
     var dueDate: Date?
     var isNotificationEnable: Bool
     var createdAt: Date
+    var lastPay: Date?
 }
