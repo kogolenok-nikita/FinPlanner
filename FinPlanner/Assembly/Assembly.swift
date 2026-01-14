@@ -8,8 +8,11 @@
 import Foundation
 
 class Assembly {
-    static func createMainViewModel() {
-        
+    static func createMainViewModel() -> MainViewModel {
+        let dataSource = FetchPaymentsManager()
+        let repository = FetchPaymentRepositoryImpl(dataSource: dataSource)
+        let useCase = FetchPaymentsUseCaseImpl(repository: repository)
+        return MainViewModel(fetchUseCase: useCase)
     }
     
     static func createAddViewModel() -> AddViewModel {

@@ -17,8 +17,8 @@ struct PaymentsView: View {
                 .zIndex(1)
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 19) {
-                    PaymentCard(path: $path)
-                    PaymentCard(path: $path)
+                    //PaymentCard(path: $path)
+                    //PaymentCard(path: $path)
                 }
                 .padding(.top, 130)
                 .padding(.bottom, 70)
