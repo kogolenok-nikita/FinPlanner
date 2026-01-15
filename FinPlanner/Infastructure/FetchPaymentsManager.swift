@@ -19,7 +19,7 @@ class FetchPaymentsManager: FetchPaymentDataSource {
                                         date.endOfMonth as NSDate)
             request.predicate = predicate
         }
-        
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         let payments = try context.fetch(request)
         
         let domainPayments = payments.map { item in
