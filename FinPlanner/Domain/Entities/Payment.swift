@@ -12,11 +12,12 @@ struct Payment: Identifiable {
     let type: PayType
     let title: String
     var description: String
-    var paymentAmount: Double
-    var totalAmount: Double
+    var paymentAmount: NSDecimalNumber?
+    var totalAmount: NSDecimalNumber?
     var dueDay: Int?
     var dueDate: Date?
     var isNotificationEnable: Bool
     var createdAt: Date
     var lastPay: Date?
+    var remainingAmount: NSDecimalNumber?
 }
