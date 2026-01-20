@@ -16,13 +16,13 @@ struct ContentView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            HeaderView(page: HeaderViewContent(totalPrice: "723 434", title: "Сумма долга", date: "15 декабря", pageType: .main), action: {
+            HeaderView(page: HeaderViewContent(totalPrice: viewModel.totalRemainderAmount.formattedWithoutDecimals, title: "Сумма долга", date: Date.now.fullDayAndMonthString, pageType: .main), action: {
                 isShowAddView.toggle()
             }, date: .constant(.now))
                 .zIndex(1)
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 19) {
-                    MainViewContentHeader(payType: $payType)
+                    MainViewContentHeader(payType: $payType, totalMonthAmount: $viewModel.oneMounthRemainderAmount, totalOneTimeAmount: $viewModel.oneTimeRemainderAmount)
                     
                     VStack(alignment: .leading, spacing: 25) {
                         switch payType {

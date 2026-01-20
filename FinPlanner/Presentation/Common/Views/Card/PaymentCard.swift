@@ -20,7 +20,7 @@ struct PaymentCard: View {
                         Text(payment.title)
                             .cygre(.black, 24)
                         HStack(spacing: 5) {
-                            Text("$ 32 500")
+                            Text("$ \(payment.remainingAmount.formattedWithoutDecimals)")
                                 .cygre(.black, 12)
                             Text("/ Остасок")
                                 .cygre(.regular, 12)
@@ -31,10 +31,15 @@ struct PaymentCard: View {
                 }
                 HStack {
                     HStack(spacing: 5) {
-                        Text("$ \(payment.paymentAmount.formattedWithoutDecimals)")
-                            .cygre(.black, 18)
-                        Text("/ Месяц")
-                            .cygre(.regular, 18)
+                        if payment.type == .mountly {
+                            Text("$ \(payment.paymentAmount.formattedWithoutDecimals)")
+                                .cygre(.black, 18)
+                            Text("/ Месяц")
+                                .cygre(.regular, 18)
+                        } else {
+                            Text("$ \(payment.remainingAmount.formattedWithoutDecimals)")
+                                .cygre(.black, 18)
+                        }
                     }
                     Spacer()
                     HStack(spacing: 5) {

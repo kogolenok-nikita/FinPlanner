@@ -8,7 +8,13 @@
 import SwiftUI
 import Combine
 
+@MainActor
 class MainViewModel: ObservableObject {
+    @Published var payments: [Payment] = []
+    @Published var totalRemainderAmount: Decimal = .zero
+    @Published var oneMounthRemainderAmount: Decimal = .zero
+    @Published var oneTimeRemainderAmount: Decimal = .zero
+    
     private let fetchUseCase: FetchPaymentsUseCase
     private let setUseCase: SetPaymentUseCase
     
@@ -17,16 +23,21 @@ class MainViewModel: ObservableObject {
         self.setUseCase = setUseCase
     }
     
-    @Published var payments: [Payment] = []
-    
     func fetchPayments() {
         do {
             try fetchUseCase.execute(from: nil) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let success):
-                    DispatchQueue.main.async {
-                        self.payments = success
+                    self.payments = success
+                    self.totalRemainderAmount = success.reduce(0) {
+                        $0 + $1.remainingAmount
+                    }
+                    self.oneMounthRemainderAmount = success.reduce(0) {
+                        $0 + $1.paymentAmount
+                    }
+                    self.oneTimeRemainderAmount = success.filter { $0.type == .oneTime}.reduce(0) {
+                        $0 + $1.totalAmount
                     }
                 case .failure(let failure):
                     print(failure.localizedDescription)

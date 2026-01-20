@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MainViewContentHeader: View {
     @Binding var payType: PayType
+    @Binding var totalMonthAmount: Decimal
+    @Binding var totalOneTimeAmount: Decimal
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -38,10 +40,15 @@ struct MainViewContentHeader: View {
                 }
             }
             HStack(spacing: 2) {
-                Text("$ 25 500 /")
-                    .cygre(.black, 14)
-                Text("Каждый месяц")
-                    .cygre(.regular, 14)
+                if payType == .mountly {
+                    Text("$ \(totalMonthAmount.formattedWithoutDecimals) /")
+                        .cygre(.black, 14)
+                    Text("Каждый месяц")
+                        .cygre(.regular, 14)
+                } else {
+                    Text("$ \(totalOneTimeAmount.formattedWithoutDecimals) /")
+                        .cygre(.black, 14)
+                }
             }
             .foregroundStyle(.white)
         }
