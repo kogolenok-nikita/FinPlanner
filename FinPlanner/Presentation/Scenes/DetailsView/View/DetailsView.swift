@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct DetailsView: View {
-    @State var isNotificationSelected: Bool = false
-    var payment: Payment
     @Binding var path: NavigationPath
+    @StateObject var viewModel: DetailsViewModel
+    
+    init(path: Binding<NavigationPath>, viewModel: DetailsViewModel) {
+        self._path = path
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,10 +22,10 @@ struct DetailsView: View {
             
             VStack(alignment: .leading) {
                 VStack(alignment: .leading, spacing: -8) {
-                    Text("$ \(payment.totalAmount.formattedWithoutDecimals)")
+                    Text("$ \(viewModel.payment.totalAmount.formattedWithoutDecimals)")
                         .cygre(.black, 27)
                         .foregroundStyle(.white)
-                    Text(payment.title)
+                    Text(viewModel.payment.title)
                         .cygre(.black, 16)
                         .foregroundStyle(.appYellow)
                 }
@@ -30,13 +34,13 @@ struct DetailsView: View {
                 VStack(alignment: .leading, spacing: 26) {
                     VStack(alignment: .leading, spacing: 17) {
                         HStack(spacing: 16) {
-                            if payment.type == .mountly {
-                                InfoTagView(text: "$ \(payment.remainingAmount.formattedWithoutDecimals)")
-                                InfoTagView(text: "$ \(payment.paymentAmount.formattedWithoutDecimals)")
+                            if viewModel.payment.type == .mountly {
+                                InfoTagView(text: "$ \(viewModel.payment.remainingAmount.formattedWithoutDecimals)")
+                                InfoTagView(text: "$ \(viewModel.payment.paymentAmount.formattedWithoutDecimals)")
                             }
                         }
                         
-                        Text(payment.description)
+                        Text(viewModel.payment.description)
                             .cygre(.regular, 14)
                             .foregroundStyle(.appMint)
                     }
@@ -44,7 +48,7 @@ struct DetailsView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         Divider()
                             .background(.appGray)
-                        PaymentStatus(paymentType: payment.type, lastPay: payment.lastPay, dueDate: payment.dueDate)
+                        PaymentStatus(paymentType: viewModel.payment.type, lastPay: viewModel.payment.lastPay, dueDate: viewModel.payment.dueDate)
                         
                         Divider()
                             .background(.appGray)
@@ -55,7 +59,7 @@ struct DetailsView: View {
                                 .foregroundStyle(.appYellow)
                                 .offset(y: -3)
                             Spacer()
-                            RadioButtonView(isSeleceted: $isNotificationSelected)
+                            RadioButtonView(isSeleceted: $viewModel.isNotificationSelected)
                         }
                         .padding(.horizontal, 10)
                     }
@@ -65,8 +69,12 @@ struct DetailsView: View {
             Spacer()
             
             VStack(alignment: .leading, spacing: 18) {
-                SolidButton(text: "Закрыть досрочно", solidСolor: .appYellow, textСolor: .appBlack, isFull: true)
-                SolidButton(text: "Удалить последний платеж", solidСolor: .appYellow, textСolor: .appYellow)
+                SolidButton(text: "Закрыть досрочно", solidСolor: .appYellow, textСolor: .appBlack, isFull: true) {
+                    viewModel.close()
+                }
+                SolidButton(text: "Удалить последний платеж", solidСolor: .appYellow, textСolor: .appYellow) {
+                    viewModel.deleteLastPayment()
+                }
             }
             
         }
@@ -95,7 +103,7 @@ extension DetailsView {
                 .foregroundStyle(.appYellow)
             Spacer()
             Button {
-                
+                viewModel.delete()
             } label: {
                 Image(systemName: "trash")
                     .resizable()
@@ -103,8 +111,6 @@ extension DetailsView {
                     .foregroundStyle(.appYellow)
                     .frame(width: 20, height: 20)
             }
-
-
         }
     }
 }
