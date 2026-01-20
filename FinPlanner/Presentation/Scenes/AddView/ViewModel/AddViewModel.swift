@@ -31,13 +31,14 @@ class AddViewModel: ObservableObject {
                                                        type: payType,
                                                        title: paymentName,
                                                        description: description,
-                                                       paymentAmount: Decimal(string: paymentAmount) as NSDecimalNumber?,
-                                                       totalAmount: Decimal(string: totalAmount) as NSDecimalNumber?,
+                                                       paymentAmount: Decimal(string: paymentAmount) ?? 0,
+                                                       totalAmount: Decimal(string: totalAmount) ?? 0,
                                                        dueDay: date.day,
                                                        dueDate: date,
                                                        isNotificationEnable: isNotificationSelected,
                                                        createdAt: .now,
-                                                       lastPay: nil))
+                                                       lastPay: nil,
+                                                       remainingAmount: 0))
             isAdded.toggle()
         } catch {
             print(error.localizedDescription)

@@ -10,6 +10,7 @@ import SwiftUI
 struct PaymentCard: View {
     @Binding var path: NavigationPath
     var payment: Payment
+    var action: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -25,12 +26,12 @@ struct PaymentCard: View {
                                 .cygre(.regular, 12)
                         }
                     }
-                    Text("This course will be your personal guide to be an UI")
+                    Text(payment.description)
                         .cygre(.regular, 14)
                 }
                 HStack {
                     HStack(spacing: 5) {
-                        Text("$ \(payment.paymentAmount)")
+                        Text("$ \(payment.paymentAmount.formattedWithoutDecimals)")
                             .cygre(.black, 18)
                         Text("/ Месяц")
                             .cygre(.regular, 18)
@@ -50,9 +51,11 @@ struct PaymentCard: View {
                 }
             }
             HStack(spacing: 4) {
-                FullButton(text: "Оплатить", fillСolor: .appBlack, textСolor: .white)
+                FullButton(text: "Оплатить", fillСolor: .appBlack, textСolor: .white) {
+                    action()
+                }
                 SolidButton(text: "Подробнее", solidСolor: .appBlack, backgroundСolor: .clear, textСolor: .appBlack) {
-                    path.append(NavigationPage.details)
+                    path.append(NavigationPage.details(payment: payment))
                 }
             }
         }

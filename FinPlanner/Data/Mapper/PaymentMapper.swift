@@ -14,13 +14,14 @@ struct PaymentMapper {
                               type: PayType(rawValue: Int(entity.type)) ?? .mountly,
                               title: entity.title ?? "",
                               description: entity.descriptionText ?? "",
-                              paymentAmount: entity.paymentAmount,
-                              totalAmount: entity.totalAmount,
+                              paymentAmount: entity.paymentAmount?.decimalValue ?? 0,
+                              totalAmount: entity.totalAmount?.decimalValue ?? 0,
                               dueDay: Int(entity.dueDay),
                               dueDate: entity.dueDate,
                               isNotificationEnable: entity.isNotificationEnabled,
                               createdAt: entity.createdAt ?? .now,
-                              lastPay: entity.lastPay)
+                              lastPay: entity.lastPay,
+                              remainingAmount: entity.remainingAmount?.decimalValue ?? 0)
         return payment
     }
     
@@ -30,13 +31,14 @@ struct PaymentMapper {
         entity.type = Int16(from.type.rawValue) 
         entity.title = from.title
         entity.descriptionText = from.description
-        entity.paymentAmount = from.paymentAmount
+        entity.paymentAmount = NSDecimalNumber(decimal: from.paymentAmount)
         entity.dueDay = Int16(from.dueDay ?? 0)
         entity.dueDate = from.dueDate
-        entity.totalAmount = from.totalAmount
+        entity.totalAmount = NSDecimalNumber(decimal: from.totalAmount)
         entity.isNotificationEnabled = from.isNotificationEnable
         entity.createdAt = from.createdAt
         entity.lastPay = from.lastPay
+        entity.remainingAmount = NSDecimalNumber(decimal: from.remainingAmount)
         return entity
     }
 }

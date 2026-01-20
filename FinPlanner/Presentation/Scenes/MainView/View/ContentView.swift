@@ -28,11 +28,15 @@ struct ContentView: View {
                         switch payType {
                         case .mountly:
                             ForEach(viewModel.payments.filter { $0.type == .mountly }) { item in
-                                PaymentCard(path: $path, payment: item)
+                                PaymentCard(path: $path, payment: item) {
+                                    viewModel.setPayment(payment: item)
+                                }
                             }
                         case .oneTime:
                             ForEach(viewModel.payments.filter { $0.type == .oneTime }) { item in
-                                PaymentCard(path: $path, payment: item)
+                                PaymentCard(path: $path, payment: item) {
+                                    viewModel.setPayment(payment: item)
+                                }
                             }
                         }
                     }

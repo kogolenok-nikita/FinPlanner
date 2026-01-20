@@ -12,7 +12,11 @@ class Assembly {
         let dataSource = FetchPaymentsManager()
         let repository = FetchPaymentRepositoryImpl(dataSource: dataSource)
         let useCase = FetchPaymentsUseCaseImpl(repository: repository)
-        return MainViewModel(fetchUseCase: useCase)
+        
+        let setDataSource = SetPaymentManager()
+        let setRepository = SetPaymentRepositoryImpl(dataSource: setDataSource)
+        let setUseCase = SetPaymentUseCaseImpl(repository: setRepository)
+        return MainViewModel(fetchUseCase: useCase, setUseCase: setUseCase)
     }
     
     static func createAddViewModel() -> AddViewModel {
@@ -20,5 +24,12 @@ class Assembly {
         let repository = CreatePaymentRepositoryImpl(dataSource: manager)
         let useCase = CreatePaymentUseCaseImp(repository: repository)
         return AddViewModel(createUseCase: useCase)
+    }
+    
+    static func createPaymentsView() -> PaymentsViewModel {
+        let dataSource = FetchPaymentsManager()
+        let repository = FetchPaymentRepositoryImpl(dataSource: dataSource)
+        let useCase = FetchPaymentsUseCaseImpl(repository: repository)
+        return PaymentsViewModel(fetchUseCase: useCase)
     }
 }

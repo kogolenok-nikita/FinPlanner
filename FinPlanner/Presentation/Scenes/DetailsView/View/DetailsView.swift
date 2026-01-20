@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     @State var isNotificationSelected: Bool = false
+    var payment: Payment
     @Binding var path: NavigationPath
     
     var body: some View {
@@ -17,10 +18,10 @@ struct DetailsView: View {
             
             VStack(alignment: .leading) {
                 VStack(alignment: .leading, spacing: -8) {
-                    Text("82 200 $")
+                    Text("$ \(payment.totalAmount.formattedWithoutDecimals)")
                         .cygre(.black, 27)
                         .foregroundStyle(.white)
-                    Text("Кредит на айфон")
+                    Text(payment.title)
                         .cygre(.black, 16)
                         .foregroundStyle(.appYellow)
                 }
@@ -29,11 +30,13 @@ struct DetailsView: View {
                 VStack(alignment: .leading, spacing: 26) {
                     VStack(alignment: .leading, spacing: 17) {
                         HStack(spacing: 16) {
-                            InfoTagView(text: "60 200 $")
-                            InfoTagView(text: "3 200 $")
+                            if payment.type == .mountly {
+                                InfoTagView(text: "$ \(payment.remainingAmount.formattedWithoutDecimals)")
+                                InfoTagView(text: "$ \(payment.paymentAmount.formattedWithoutDecimals)")
+                            }
                         }
                         
-                        Text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmoid tempor incididunt ut labire ert dolore manga. Ut emin minta vsipvcn")
+                        Text(payment.description)
                             .cygre(.regular, 14)
                             .foregroundStyle(.appMint)
                     }

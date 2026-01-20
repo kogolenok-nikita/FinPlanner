@@ -10,9 +10,11 @@ import Combine
 
 class MainViewModel: ObservableObject {
     private let fetchUseCase: FetchPaymentsUseCase
+    private let setUseCase: SetPaymentUseCase
     
-    init(fetchUseCase: FetchPaymentsUseCase) {
+    init(fetchUseCase: FetchPaymentsUseCase, setUseCase: SetPaymentUseCase) {
         self.fetchUseCase = fetchUseCase
+        self.setUseCase = setUseCase
     }
     
     @Published var payments: [Payment] = []
@@ -33,6 +35,13 @@ class MainViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-        
+    }
+    
+    func setPayment(payment: Payment) {
+        do {
+            try setUseCase.execute(payment: payment)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

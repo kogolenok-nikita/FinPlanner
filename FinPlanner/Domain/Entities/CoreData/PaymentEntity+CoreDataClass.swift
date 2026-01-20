@@ -36,7 +36,6 @@ extension PaymentEntity {
     @NSManaged public var type: Int16
     @NSManaged public var lastPay: Date?
     @NSManaged public var remainingAmount: NSDecimalNumber?
-
 }
 
 extension PaymentEntity : Identifiable {

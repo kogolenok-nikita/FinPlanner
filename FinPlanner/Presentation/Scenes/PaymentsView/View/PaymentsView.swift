@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct PaymentsView: View {
-    @State var date: Date = .now
     @Binding var path: NavigationPath
+    @StateObject var viewModel = Assembly.createPaymentsView()
     
     var body: some View {
         ZStack(alignment: .top) {
-            HeaderView(page: HeaderViewContent(totalPrice: "25 500", title: "Платежи", date: date.withoutDayMonthYear, pageType: .paymentList), date: $date)
+            HeaderView(page: HeaderViewContent(totalPrice: "25 500", title: "Платежи", date: viewModel.date.withoutDayMonthYear, pageType: .paymentList), date: $viewModel.date)
                 .zIndex(1)
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 19) {
-                    //PaymentCard(path: $path)
-                    //PaymentCard(path: $path)
+                    ForEach(viewModel.payments) { payment in
+                        PaymentCard(path: $path, payment: payment) {
+                            //
+                        }
+                    }
                 }
                 .padding(.top, 130)
                 .padding(.bottom, 70)
@@ -26,5 +29,8 @@ struct PaymentsView: View {
         }
         .padding(.horizontal, 20)
         .background(.appBlack)
+        .onAppear {
+            viewModel.fetchPayments()
+        }
     }
 }

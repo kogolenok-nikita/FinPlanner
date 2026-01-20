@@ -18,8 +18,8 @@ struct FinPlannerApp: App {
                 MainTabView(path: $path) 
                     .navigationDestination(for: NavigationPage.self) { page in
                         switch page {
-                        case .details:
-                            DetailsView(path: $path)
+                        case .details(let payment):
+                            DetailsView(payment: payment, path: $path)
                         }
                     }
             }
