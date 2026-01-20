@@ -44,61 +44,7 @@ struct DetailsView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         Divider()
                             .background(.appGray)
-                        
-                        HStack {
-                            switch payment.type {
-                            case .mountly:
-                                Text("Ближайший платеж")
-                                    .cygre(.regular, 14)
-                                    .foregroundStyle(.appYellow)
-                                    .offset(y: -3)
-                                Spacer()
-                                
-                                if let lastPay = payment.lastPay, lastPay.isInSameMonth(date: .now) {
-                                    HStack(spacing: 4) {
-                                        Text("оплачен")
-                                            .cygre(.regular, 12)
-                                        Text(lastPay.dayMonthString)
-                                            .cygre(.black, 12)
-                                            
-                                    }
-                                    .padding(.horizontal, 10)
-                                    .padding(.bottom, 4)
-                                    .background(.appYellow)
-                                    .clipShape(Capsule())
-                                } else {
-                                    HStack(spacing: 4) {
-                                        Text("оплатить до")
-                                            .cygre(.regular, 12)
-                                        Text("\(payment.dueDay ?? 0).\(Date().month)")
-                                            .cygre(.black, 12)
-                                            
-                                    }
-                                    .padding(.horizontal, 10)
-                                    .padding(.bottom, 4)
-                                    .background(.appYellow)
-                                    .clipShape(Capsule())
-                                }
-                                
-                            case .oneTime:
-                                Text("Оплатить до")
-                                    .cygre(.regular, 14)
-                                    .foregroundStyle(.appYellow)
-                                    .offset(y: -3)
-                                Spacer()
-                                HStack(spacing: 4) {
-                                    Text(payment.dueDate?.dayMonthString ?? "")
-                                        .cygre(.black, 12)
-                                        
-                                }
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, 4)
-                                .background(.appYellow)
-                                .clipShape(Capsule())
-                            }
-                            
-                        }
-                        .padding(.horizontal, 10)
+                        PaymentStatus(paymentType: payment.type, lastPay: payment.lastPay, dueDate: payment.dueDate)
                         
                         Divider()
                             .background(.appGray)
@@ -162,5 +108,3 @@ extension DetailsView {
         }
     }
 }
-
-
