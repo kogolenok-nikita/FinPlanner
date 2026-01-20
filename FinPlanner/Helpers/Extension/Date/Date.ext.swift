@@ -61,4 +61,10 @@ extension Date {
         formatted.dateFormat = "dd.MM"
         return formatted.string(from: self)
     }
+    
+    var fullDayAndMonthString: String {
+        let formatted = DateFormatter()
+        formatted.dateFormat = "dd.MMMM"
+        return formatted.string(from: self)
+    }
 }
