@@ -27,6 +27,11 @@ class AddViewModel: ObservableObject {
     
     func createNewPayment() {
         do {
+            var lastPayDate: Date? = nil
+            if payType == .mountly {
+                lastPayDate = Date.now
+            }
+            
             try createUseCase.execute(payment: Payment(id: UUID().uuidString,
                                                        type: payType,
                                                        title: paymentName,
@@ -37,8 +42,8 @@ class AddViewModel: ObservableObject {
                                                        dueDate: date,
                                                        isNotificationEnable: isNotificationSelected,
                                                        createdAt: .now,
-                                                       lastPay: nil,
-                                                       remainingAmount: 0))
+                                                       lastPay: lastPayDate,
+                                                       remainingAmount: Decimal(string: totalAmount) ?? .zero))
             isAdded.toggle()
         } catch {
             print(error.localizedDescription)

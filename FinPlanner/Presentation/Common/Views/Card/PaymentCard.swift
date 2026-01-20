@@ -40,8 +40,14 @@ struct PaymentCard: View {
                     HStack(spacing: 5) {
                         Text("оплатить до")
                             .cygre(.light, 12)
-                        Text("\(payment.dueDay ?? 0)")
-                            .cygre(.black, 12)
+                        switch payment.type {
+                        case .mountly:
+                            Text("\(payment.dueDay ?? 0).\(Date.now.month)")
+                                .cygre(.black, 12)
+                        case .oneTime:
+                            Text("\(payment.dueDate?.dayMonthString ?? "")")
+                                .cygre(.black, 12)
+                        }
                     }
                     .padding(.horizontal, 11)
                     .padding(.bottom, 4)
@@ -51,9 +57,12 @@ struct PaymentCard: View {
                 }
             }
             HStack(spacing: 4) {
-                FullButton(text: "Оплатить", fillСolor: .appBlack, textСolor: .white) {
-                    action()
+                if !(payment.lastPay?.isInSameMonth(date: Date.now) ?? false) {
+                    FullButton(text: "Оплатить", fillСolor: .appBlack, textСolor: .white) {
+                        action()
+                    }
                 }
+                
                 SolidButton(text: "Подробнее", solidСolor: .appBlack, backgroundСolor: .clear, textСolor: .appBlack) {
                     path.append(NavigationPage.details(payment: payment))
                 }
@@ -62,7 +71,7 @@ struct PaymentCard: View {
         .padding(.horizontal, 12)
         .padding(.top, 10)
         .padding(.bottom, 20)
-        .background(.appRed)
+        .background(payment.lastPay?.isInSameMonth(date: Date.now) ?? false ? .appMint : .appRed)
         .clipShape(RoundedRectangle(cornerRadius: 25))
     }
 }
