@@ -42,23 +42,7 @@ struct PaymentCard: View {
                         }
                     }
                     Spacer()
-                    HStack(spacing: 5) {
-                        Text("оплатить до")
-                            .cygre(.light, 12)
-                        switch payment.type {
-                        case .mountly:
-                            Text("\(payment.dueDay ?? 0).\(Date.now.month)")
-                                .cygre(.black, 12)
-                        case .oneTime:
-                            Text("\(payment.dueDate?.dayMonthString ?? "")")
-                                .cygre(.black, 12)
-                        }
-                    }
-                    .padding(.horizontal, 11)
-                    .padding(.bottom, 4)
-                    .background(.appBlack)
-                    .foregroundStyle(.white)
-                    .clipShape(Capsule())
+                    PaymentStatus(paymentType: payment.type, lastPay: payment.lastPay, dueDate: payment.dueDate, isShowLabel: false)
                 }
             }
             HStack(spacing: 4) {

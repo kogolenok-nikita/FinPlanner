@@ -11,16 +11,20 @@ struct PaymentStatus: View {
     var paymentType: PayType
     var lastPay: Date?
     var dueDate: Date?
+    var isShowLabel: Bool = true
     
     var body: some View {
         HStack {
             switch paymentType {
             case .mountly:
-                Text("Ближайший платеж")
-                    .cygre(.regular, 14)
-                    .foregroundStyle(.appYellow)
-                    .offset(y: -3)
-                Spacer()
+                if isShowLabel {
+                    Text("Ближайший платеж")
+                        .cygre(.regular, 14)
+                        .foregroundStyle(.appYellow)
+                        .offset(y: -3)
+                    Spacer()
+                }
+                
                 
                 if let lastPay, lastPay.isInSameMonth(date: .now) {
                     HStack(spacing: 4) {
@@ -49,11 +53,14 @@ struct PaymentStatus: View {
                 }
                 
             case .oneTime:
-                Text("Оплатить до")
-                    .cygre(.regular, 14)
-                    .foregroundStyle(.appYellow)
-                    .offset(y: -3)
-                Spacer()
+                if isShowLabel {
+                    Text("Оплатить до")
+                        .cygre(.regular, 14)
+                        .foregroundStyle(.appYellow)
+                        .offset(y: -3)
+                    Spacer()
+                }
+                
                 HStack(spacing: 4) {
                     Text(dueDate?.dayMonthString ?? "")
                         .cygre(.black, 12)
