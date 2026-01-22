@@ -20,4 +20,5 @@ struct Payment: Identifiable, Hashable {
     var createdAt: Date
     var lastPay: Date?
     var remainingAmount: Decimal
+    var closeDate: Date?
 }

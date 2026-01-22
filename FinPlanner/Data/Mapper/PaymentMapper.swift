@@ -21,7 +21,8 @@ struct PaymentMapper {
                               isNotificationEnable: entity.isNotificationEnabled,
                               createdAt: entity.createdAt ?? .now,
                               lastPay: entity.lastPay,
-                              remainingAmount: entity.remainingAmount?.decimalValue ?? 0)
+                              remainingAmount: entity.remainingAmount?.decimalValue ?? 0,
+                              closeDate: entity.closeDate)
         return payment
     }
     
@@ -39,6 +40,7 @@ struct PaymentMapper {
         entity.createdAt = from.createdAt
         entity.lastPay = from.lastPay
         entity.remainingAmount = NSDecimalNumber(decimal: from.remainingAmount)
+        entity.closeDate = from.closeDate
         return entity
     }
 }

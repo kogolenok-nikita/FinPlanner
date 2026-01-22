@@ -14,10 +14,14 @@ class FetchPaymentsManager: FetchPaymentDataSource {
     func fetchPayments(date: Date?, completion: (Result<[Payment], any Error>) -> Void) throws {
         let request = PaymentEntity.fetchRequest()
         if let date {
-            let predicate = NSPredicate(format: "lastPay >= %@ AND lastPay < %@",
-                                        date.startOfMonth as NSDate,
-                                        date.endOfMonth as NSDate)
-            request.predicate = predicate
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                NSPredicate(format: "lastPay >= %@ AND lastPay < %@",
+                            date.startOfMonth as NSDate,
+                            date.endOfMonth as NSDate),
+                NSPredicate(format: "isClose == NO")
+            ])
+        } else {
+            request.predicate = NSPredicate(format: "isClose == NO")
         }
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         let payments = try context.fetch(request)

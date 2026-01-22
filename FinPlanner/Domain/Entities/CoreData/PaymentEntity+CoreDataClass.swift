@@ -2,7 +2,7 @@
 //  PaymentEntity+CoreDataClass.swift
 //  FinPlanner
 //
-//  Created by Никита Коголенок on 15.01.26.
+//  Created by Никита Коголенок on 22.01.26.
 //
 //
 
@@ -36,6 +36,8 @@ extension PaymentEntity {
     @NSManaged public var type: Int16
     @NSManaged public var lastPay: Date?
     @NSManaged public var remainingAmount: NSDecimalNumber?
+    @NSManaged public var isClose: Bool
+    @NSManaged public var closeDate: Date?
 }
 
 extension PaymentEntity : Identifiable {

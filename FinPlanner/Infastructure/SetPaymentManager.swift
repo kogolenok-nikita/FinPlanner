@@ -24,13 +24,18 @@ class SetPaymentManager: SetPaymentDataSource {
                 let paymentAmount = contextPayment.paymentAmount?.decimalValue ?? .zero
                 remainingAmount -= paymentAmount
                 
-                if remainingAmount < 0 {
+                if remainingAmount <= 0 {
                     contextPayment.remainingAmount = .zero
+                    contextPayment.isClose = true
+                    contextPayment.closeDate = .now
+                    contextPayment.isNotificationEnabled = false
                 } else {
                     contextPayment.remainingAmount = NSDecimalNumber(decimal: remainingAmount)
                 }
                 
             } else {
+                contextPayment.isClose = true
+                contextPayment.closeDate = .now
                 contextPayment.remainingAmount = .zero
                 contextPayment.isNotificationEnabled = false
             }
