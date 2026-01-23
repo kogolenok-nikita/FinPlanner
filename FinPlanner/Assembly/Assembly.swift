@@ -34,6 +34,14 @@ class Assembly {
     }
     
     static func createDetailsViewModel(payment: Payment) -> DetailsViewModel {
-        return DetailsViewModel(payment: payment)
+        let deleteDataSource = DeletePaymentManager()
+        let deleteRepository = DeletePaymentRepositoryImpl(dataSource: deleteDataSource)
+        let deleteUseCase = DeletePaymentUseCaseImpl(repository: deleteRepository)
+        
+        let updateDataSource = UpdatePaymentManager()
+        let updateRepository = UpdatePaymentRepositoryImpl(dataSource: updateDataSource)
+        let updateUseCase = UpdatePaymentUseCaseImpl(repository: updateRepository)
+        
+        return DetailsViewModel(payment: payment, deleteUseCase: deleteUseCase, updateUseCase: updateUseCase)
     }
 }

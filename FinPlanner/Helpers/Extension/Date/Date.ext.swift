@@ -67,4 +67,8 @@ extension Date {
         formatted.dateFormat = "dd MMMM"
         return formatted.string(from: self)
     }
+    
+    func minusMoths(value: Int) -> Date {
+        Calendar.current.date(byAdding: .month, value: -value, to: self) ?? self
+    }
 }

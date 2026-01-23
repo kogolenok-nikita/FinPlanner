@@ -15,25 +15,46 @@ class DetailsViewModel: ObservableObject {
         }
     }
     
+    private let deleteUseCase: DeletePaymentUseCase
+    private let updateUseCase: UpdatePaymentUseCase
     var payment: Payment
     
-    init(payment: Payment) {
+    init(payment: Payment, deleteUseCase: DeletePaymentUseCase, updateUseCase: UpdatePaymentUseCase) {
         self.payment = payment
+        self.deleteUseCase = deleteUseCase
+        self.updateUseCase = updateUseCase
+        self.isNotificationSelected = payment.isNotificationEnable
     }
     
-    func delete() {
-        print("delete")
+    func deletePayment() {
+        do {
+            try deleteUseCase.execute(payment: payment)
+        } catch {
+            print(error)
+        }
     }
     
     func updateNotification(_ newValue: Bool) {
-        print("updateNotification")
+        do {
+            try updateUseCase.execute(update: payment, notificationIsOn: newValue)
+        } catch {
+            print(error)
+        }
     }
     
-    func close() {
-        print("close")
+    func closePayment() {
+        do {
+            try updateUseCase.execute(close: payment)
+        } catch {
+            print(error)
+        }
     }
     
     func deleteLastPayment() {
-        print("deleteLastPayment")
+        do {
+            try updateUseCase.execute(delete: payment)
+        } catch {
+            print(error)
+        }
     }
 }

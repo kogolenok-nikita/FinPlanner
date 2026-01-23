@@ -18,10 +18,10 @@ class FetchPaymentsManager: FetchPaymentDataSource {
                 NSPredicate(format: "lastPay >= %@ AND lastPay < %@",
                             date.startOfMonth as NSDate,
                             date.endOfMonth as NSDate),
-                NSPredicate(format: "isClose == NO")
+//                NSPredicate(format: "isClose == NO")
             ])
         } else {
-            request.predicate = NSPredicate(format: "isClose == NO")
+//            request.predicate = NSPredicate(format: "isClose == NO")
         }
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         let payments = try context.fetch(request)

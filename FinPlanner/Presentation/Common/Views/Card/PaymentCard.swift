@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct PaymentCard: View {
+    @State var isPay: Bool
     @Binding var path: NavigationPath
     var payment: Payment
     var action: () -> Void
+    var checkIsPay: Bool {
+        !isPay && !(payment.lastPay?.isInSameMonth(date: Date.now) ?? false)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -46,9 +50,10 @@ struct PaymentCard: View {
                 }
             }
             HStack(spacing: 4) {
-                if !(payment.lastPay?.isInSameMonth(date: Date.now) ?? false) {
+                if checkIsPay {
                     FullButton(text: "Оплатить", fillСolor: .appBlack, textСolor: .white) {
                         action()
+                        isPay.toggle()
                     }
                 }
                 
@@ -60,7 +65,14 @@ struct PaymentCard: View {
         .padding(.horizontal, 12)
         .padding(.top, 10)
         .padding(.bottom, 20)
-        .background(payment.lastPay?.isInSameMonth(date: Date.now) ?? false ? .appMint : .appRed)
+        .background(checkIsPayColor())
         .clipShape(RoundedRectangle(cornerRadius: 25))
+    }
+    
+    func checkIsPayColor() -> Color {
+        if isPay || payment.lastPay?.isInSameMonth(date: Date.now) ?? false {
+            return .appMint
+        }
+        return .appRed
     }
 }

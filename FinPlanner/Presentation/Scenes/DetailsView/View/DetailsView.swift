@@ -70,7 +70,7 @@ struct DetailsView: View {
             
             VStack(alignment: .leading, spacing: 18) {
                 SolidButton(text: "Закрыть досрочно", solidСolor: .appYellow, textСolor: .appBlack, isFull: true) {
-                    viewModel.close()
+                    viewModel.closePayment()
                 }
                 SolidButton(text: "Удалить последний платеж", solidСolor: .appYellow, textСolor: .appYellow) {
                     viewModel.deleteLastPayment()
@@ -103,7 +103,8 @@ extension DetailsView {
                 .foregroundStyle(.appYellow)
             Spacer()
             Button {
-                viewModel.delete()
+                viewModel.deletePayment()
+                path.removeLast()
             } label: {
                 Image(systemName: "trash")
                     .resizable()

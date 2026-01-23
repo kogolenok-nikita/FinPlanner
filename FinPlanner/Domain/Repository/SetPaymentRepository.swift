@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol SetPaymentRepository {
+protocol SetPaymentRepository: AnyObject {
     func setPayment(payment: Payment) throws
 }

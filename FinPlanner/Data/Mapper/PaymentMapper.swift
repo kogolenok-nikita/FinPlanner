@@ -40,7 +40,7 @@ struct PaymentMapper {
         entity.createdAt = from.createdAt
         entity.lastPay = from.lastPay
         entity.remainingAmount = NSDecimalNumber(decimal: from.remainingAmount)
-        entity.closeDate = from.closeDate
+        entity.isClose = false
         return entity
     }
 }

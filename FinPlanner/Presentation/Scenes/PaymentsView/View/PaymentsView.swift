@@ -13,12 +13,12 @@ struct PaymentsView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            HeaderView(page: HeaderViewContent(totalPrice: "25 500", title: "Платежи", date: viewModel.date.withoutDayMonthYear, pageType: .paymentList), date: $viewModel.date)
+            HeaderView(page: HeaderViewContent(totalPrice: viewModel.totalAmount.formattedWithoutDecimals, title: "Платежи", date: viewModel.date.withoutDayMonthYear, pageType: .paymentList), date: $viewModel.date)
                 .zIndex(1)
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 19) {
                     ForEach(viewModel.payments) { payment in
-                        PaymentCard(path: $path, payment: payment) {
+                        PaymentCard(isPay: true, path: $path, payment: payment) {
                             //
                         }
                     }
